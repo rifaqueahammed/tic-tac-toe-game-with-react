@@ -1,11 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Square from './square'
 import '../App.css';
 
-function Board() {
-    const [squares,setSquares] = useState(Array(9).fill(null));
-    const [xIsNext, setXIsNext] = useState(true);
-
+function Board({xIsNext,squares,onPlay}) {
+  
     const handleClick = (i)=>{
       if(calculateWinner(squares) || squares[i]){
         return
@@ -17,8 +15,7 @@ function Board() {
       else{
         nextSquares[i] = 'O';
       }
-      setSquares(nextSquares);
-      setXIsNext(!xIsNext);
+      onPlay(nextSquares);
     }
 
     // calculate Winner Function
@@ -36,7 +33,7 @@ function Board() {
 
       for(let i =0; i<lines.length;i++){
         const [a,b,c] = lines[i];
-        if(squares[a] && squares[a] === squares[b] && squares[a] && squares[c]) {
+        if(squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
           return squares[a];
         }
       }
